@@ -8,7 +8,6 @@ const SearchBox = ({ filter, onFilter }) => {
         onChange={(e) => onFilter(e.target.value)}
         className={s.input}
         type="text"
-        placeholder="type name here"
       />
     </div>
   );

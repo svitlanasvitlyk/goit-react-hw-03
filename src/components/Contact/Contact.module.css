@@ -1,0 +1,10 @@
+.icon {
+  color: var(--buttonColor);
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
+}
+.text {
+  display: flex;
+  align-items: center;
+}

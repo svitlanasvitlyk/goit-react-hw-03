@@ -1,23 +1,73 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import "./App.module.css";
+import initialContacts from "../../contacts.json";
+import ContactForm from "../ContactForm/ContactForm";
+import ContactList from "../ContactList/ContactList";
+import SearchBox from "../SearchBox/SearchBox";
+import s from "./App.module.css";
+import { ImShocked } from "react-icons/im";
 
-import styles from "./App.module.css";
-import ContactForm from "../ContactForm";
-import SearchBox from "../SearchBox";
-import ContactList from "../ContactList";
+function App() {
+  const [contacts, setContacts] = useState(initialContacts);
+  const [filter, setFilter] = useState("");
+  const initialValues = { name: "", number: "" };
+  const handleSubmit = (values, actions) => {
+    const isContactExist = contacts.some(
+      (contact) => contact.name === values.name
+    );
+    if (isContactExist) {
+      alert(`${values.name} is already in contacts`);
+      return;
+    }
+    const newContact = {
+      id: crypto.randomUUID(),
+      name: values.name,
+      number: values.number,
+    };
+    setContacts((prevState) => [newContact, ...prevState]);
+    actions.resetForm();
+  };
+  const filterContact = contacts.filter((contact) =>
+    contact.name.toLowerCase().includes(filter.toLowerCase())
+  );
+  const deleteContact = (contactId) => {
+    setContacts((contacts) =>
+      contacts.filter((contact) => contact.id !== contactId)
+    );
+  };
 
-const App = () => {
-  const [contacts, setContacts] = useState([
-    { id: "id-1", name: "Rosie Simpson", number: "459-12-56" },
-    { id: "id-2", name: "Hermione Kline", number: "443-89-12" },
-    { id: "id-3", name: "Eden Clements", number: "645-17-79" },
-    { id: "id-4", name: "Annie Copeland", number: "227-91-26" },
-  ]);
+  useEffect(() => {
+    try {
+      const contacts = localStorage.getItem("contacts");
+      const parsedContacts = JSON.parse(contacts);
+      if (parsedContacts) {
+        setContacts(parsedContacts);
+      }
+    } catch (error) {
+      console.error("Error reading from localStorage", error);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (contacts !== initialContacts) {
+      localStorage.setItem("contacts", JSON.stringify(contacts));
+    }
+  }, [contacts]);
 
   return (
-    <div className={container}>
-      <h1>Phonebook</h1>
+    <div className={s.container}>
+      <h1 className={s.header}>PhoneBook</h1>
+      <ContactForm initialValues={initialValues} submit={handleSubmit} />
+      <SearchBox filter={filter} onFilter={setFilter} />
+      {filterContact.length > 0 ? (
+        <ContactList initialContacts={filterContact} onDelete={deleteContact} />
+      ) : (
+        <h2 className={s.nothingFound}>
+          Nothing found <ImShocked className={s.icon} />{" "}
+        </h2>
+      )}
     </div>
   );
-};
+}
 
 export default App;

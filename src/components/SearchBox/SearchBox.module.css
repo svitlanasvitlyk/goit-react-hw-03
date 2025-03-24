@@ -1,0 +1,22 @@
+.container {
+  display: block;
+  margin: 0 auto;
+
+  padding: 10px;
+}
+.input {
+  background-color: var(--sectionColors);
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  color: black;
+  padding: 5px 10px;
+  box-shadow: var(--shadow);
+  transition: transform 0.25s, border-color 0.25s;
+  width: 265px;
+}
+
+.input:hover,
+.input:focus {
+  transform: scale(1.1);
+}

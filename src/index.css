@@ -3,7 +3,6 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
 
@@ -13,7 +12,7 @@
   -moz-osx-font-smoothing: grayscale;
   --backGroundColor: rgb(163, 113, 161);
   --sectionColors: whitesmoke;
-  --buttonColor: #646cff;
+  --buttonColor: #5d60a0;
   --shadow: 0 10px 15px rgba(0, 0, 0, 0.2), 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 body {

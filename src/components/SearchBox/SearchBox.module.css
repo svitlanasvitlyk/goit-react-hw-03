@@ -5,7 +5,7 @@
   padding: 10px;
 }
 .input {
-  background-color: var(--sectionColors);
+  background-color: blue;
   border: none;
   border-radius: 5px;
   outline: none;
